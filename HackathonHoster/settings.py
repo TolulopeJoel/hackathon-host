@@ -31,8 +31,9 @@ SECRET_KEY = 'django-insecure-q+*ui8@7t-&omq)&(d!zodnn)c5tv#tna7t-1mqq78ez3#+^*o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['railway.app', 'localhost']
 
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
 
 # Application definition
 
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
+    'whitenoise',
     
     # local apps
     'hackathon.apps.HackathonConfig',
@@ -159,3 +162,9 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000',
+     'https://hackathon-host.netlify.app/',
+]
