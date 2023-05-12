@@ -15,6 +15,14 @@ class HackathonViewset(viewsets.ModelViewSet):
         return serializer.save(organizer=organizer)
 
 
+class EnrolledHackthonListView(generics.ListAPIView):
+    serializer_class = HackathonSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Hackathon.objects.filter(participants=user)
+
+
 class HackathonRegistrationView(generics.CreateAPIView):
     queryset = Hackathon.objects.all()
     serializer_class = HackathonSerializer
@@ -52,4 +60,3 @@ class HackathonRegistrationView(generics.CreateAPIView):
             'message': f'You have successfully registered for {hackathon.title}.'
         }
         return Response(response_data, status=status.HTTP_201_CREATED)
-

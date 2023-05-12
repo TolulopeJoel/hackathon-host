@@ -10,6 +10,7 @@ router.register('', views.HackathonViewset, basename='hackathon')
 
 urlpatterns = [
     path('register/', views.HackathonRegistrationView.as_view(),name='hackathon-register'),
+    path('enrolled/', views.EnrolledHackthonListView.as_view(),name='hackathon-enrolled'),
 ]
 
 urlpatterns += router.urls
