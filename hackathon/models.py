@@ -14,10 +14,17 @@ class Hackathon(models.Model):
     ]
     sumbission_type = models.CharField(max_length=10, choices=SUBMISSION_TYPE_CHOICES)
     end_datetime = models.DateTimeField()
-    reward_prize = models.PositiveIntegerField()
     start_datetime = models.DateTimeField()
+    reward_prize = models.PositiveIntegerField()
     
-    organizer = models.ManyToManyField(get_user_model(), related_name='organized_hackathons')
+    organizer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='organized_hackathons')
+    participants = models.ManyToManyField(get_user_model())
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ('-created_at',)
 
     def __str__(self):
         return self.title
