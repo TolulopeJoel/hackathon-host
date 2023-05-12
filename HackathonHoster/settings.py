@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'hackathon_host',
         'USER': 'hackathon_host_user',
-        'PASSWORD': env.str('DB_PASSSWORD'),
+        'PASSWORD': env.str('DB_PASSWORD'),
         'HOST': env.str('DB_HOST'),
         'PORT': '5432',
     }
