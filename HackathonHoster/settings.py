@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     
     # local apps
     'hackathon.apps.HackathonConfig',
+    'submissions.apps.SubmissionsConfig',
     'accounts.apps.AccountsConfig',
 ]
 
