@@ -5,6 +5,11 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 
+# contains all hackathon list('hackathon/') and detail(hackathon/<int:pk>/) endpoints
 router.register('', views.HackathonViewset, basename='hackathon')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('register/', views.HackathonRegistrationView.as_view(),name='hackathon-register'),
+]
+
+urlpatterns += router.urls
