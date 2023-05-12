@@ -12,13 +12,13 @@ class Hackathon(models.Model):
         ('file', 'File'),
         ('link', 'Link'),
     ]
-    sumbission_type = models.CharField(max_length=10, choices=SUBMISSION_TYPE_CHOICES)
+    submission_type = models.CharField(max_length=10, choices=SUBMISSION_TYPE_CHOICES)
     end_datetime = models.DateTimeField()
     start_datetime = models.DateTimeField()
     reward_prize = models.PositiveIntegerField()
     
     organizer = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='organized_hackathons')
-    participants = models.ManyToManyField(get_user_model())
+    participants = models.ManyToManyField(get_user_model(), blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
