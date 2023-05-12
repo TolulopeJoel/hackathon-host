@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from datetime import timedelta
+from environs import Env
 from pathlib import Path
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,8 +90,12 @@ WSGI_APPLICATION = 'HackathonHoster.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'hackathon_host',
+        'USER': 'hackathon_host_user',
+        'PASSWORD': env.str('DB_PASSSWORD'),
+        'HOST': env.str('DB_HOST'),
+        'PORT': '5432',
     }
 }
 
