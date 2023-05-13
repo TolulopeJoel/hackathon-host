@@ -28,16 +28,14 @@ class HackathonRegistrationView(generics.CreateAPIView):
     serializer_class = HackathonSerializer
 
     def get_object(self):
-        hackathon_id = self.request.data.get('hackathon_id')
+        hackathon_id = self.kwargs.get('id')
         try:
             return self.queryset.get(id=hackathon_id)
         except Hackathon.DoesNotExist:
             raise NotFound('Hackathon not found')
 
     def create(self, request, *args, **kwargs):
-        """
-        Add users as participants Hackathon
-        """
+        # Add users as participants Hackathon
         hackathon = self.get_object()
         user = request.user
 
