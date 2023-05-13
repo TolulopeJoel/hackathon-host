@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
+from accounts.serializers import PublicUserSerializer
+
 from . import validators
 from .models import Submission
 
 
 class SubmissionSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(read_only=True)
+    user = PublicUserSerializer(read_only=True)
     hackathon = serializers.CharField(read_only=True)
 
     class Meta:

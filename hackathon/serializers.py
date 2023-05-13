@@ -1,11 +1,14 @@
 from django.utils import timezone
 from rest_framework import serializers
 
+from accounts.serializers import PublicUserSerializer
+
 from .models import Hackathon
 
 
 class HackathonSerializer(serializers.ModelSerializer):
-    organizer = serializers.CharField(read_only=True)
+    organizer = PublicUserSerializer(read_only=True)
+    participants = PublicUserSerializer(read_only=True, many=True)
 
     class Meta:
         model = Hackathon
