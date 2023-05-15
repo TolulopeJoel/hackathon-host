@@ -3,6 +3,7 @@
 This API allows authorized users to create, list, register for, and submit to hackathons. It provides the following endpoints:
 
 - [Hackaton-Host](#hackaton-host)
+- [Hackathon](#hackathon)
   - [Create Hackathon](#create-hackathon)
     - [Request](#request)
       - [Parameters](#parameters)
@@ -12,13 +13,22 @@ This API allows authorized users to create, list, register for, and submit to ha
       - [Parameters](#parameters-1)
     - [Response](#response-1)
       - [Success Response](#success-response)
-  - [Register for Hackathon](#register-for-hackathon)
+  - [Enrolled Hackathons](#enrolled-hackathons)
     - [Request](#request-2)
-    - [Request](#request-3)
       - [Parameters](#parameters-2)
     - [Response](#response-2)
+      - [Success Response](#success-response-1)
+  - [Register for Hackathon](#register-for-hackathon)
+    - [Request](#request-3)
+      - [Parameters](#parameters-3)
+    - [Response](#response-3)
 
-The API is built using Django and Django Rest Framework with a MySQL or PostgresQL database.
+
+The API is built using Django and Django Rest Framework with a **PostgresQL** database
+
+# Hackathon
+
+All APIs related to Hackathon
 
 ## Create Hackathon
 
@@ -100,12 +110,12 @@ None
 ```json
 [
     {
-        "id": 1,
+        "id": 16,
         "organizer": {
             "id": 1,
-            "username": "tolu",
-            "first_name": "",
-            "last_name": ""
+            "username": "TolulopeJoel",
+            "first_name": "Tolulope",
+            "last_name": "Joel"
         },
         "title": "AI for Good Hackathon",
         "description": "A hackathon to build AI applications that have a positive impact on society",
@@ -119,16 +129,16 @@ None
         "updated_at": "2022-04-20T12:34:56.789Z",
         "participants": [
             {
-                "id": 1,
+                "id": 81,
                 "username": "testuser",
                 "first_name": "Test",
                 "last_name": "User"
             },
             {
                 "id": 3,
-                "username": "TolulopeJoel",
-                "first_name": "Tolulope",
-                "last_name": "Joel"
+                "username": "Pratham",
+                "first_name": "Pratham",
+                "last_name": "Ahad"
             }
         ],
     },
@@ -149,9 +159,92 @@ None
 ]
 ```
 
+## Enrolled Hackathons
+
+This endpoint retrieves a list of all hackathons current user is a participant in.
+
+### Request
+
+`GET /api/hackathon/enrolled`
+
+**Authentication Required:** Yes
+
+#### Parameters
+
+None
+
+### Response
+
+#### Success Response
+
+```json
+[
+    {
+        "id": 7,
+        "organizer": {
+            "id": 13,
+            "username": "CalebC",
+            "first_name": "Caleb",
+            "last_name": "Crater"
+        },
+        "title": "Transforming the Changes of AI",
+        "description": "A hackathon to build AI applications based on already existing ones.",
+        "background_image": "https://example.com/background-image.jpg",
+        "hackathon_image": "https://example.com/hackathon-image.jpg",
+        "type_of_submission": "file",
+        "start_datetime": "2022-01-01T00:00:00Z",
+        "end_datetime": "2022-01-03T00:00:00Z",
+        "reward_prize": 7000,
+        "created_at": "2022-04-20T12:34:56.789Z",
+        "updated_at": "2022-04-20T12:34:56.789Z",
+        "participants": [
+            {
+                "id": 81,
+                "username": "testuser",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            {
+                "id": 3,
+                "username": "Barnabas",
+                "first_name": "Tolulope",
+                "last_name": "Joel"
+            }
+        ],
+    },
+    {
+        "id": 16,
+        "title": "AI for Good Hackathon",
+        "description": "A hackathon to build AI applications that have a positive impact on society",
+        "background_image": "https://example.com/background-image.jpg",
+        "hackathon_image": "https://example.com/hackathon-image.jpg",
+        "type_of_submission": "link",
+        "start_datetime": "2022-02-01T00:00:00Z",
+        "end_datetime": "2022-02-03T00:00:00Z",
+        "reward_prize": 15000,
+        "created_at": "2022-04-20T12:34:56.789Z",
+        "updated_at": "2022-04-20T12:34:56.789Z",
+        "participants": [
+            {
+                "id": 81,
+                "username": "testuser",
+                "first_name": "Test",
+                "last_name": "User"
+            },
+            {
+                "id": 3,
+                "username": "Pratham",
+                "first_name": "Pratham",
+                "last_name": "Ahad"
+            }
+        ]
+    }
+]
+```
+
 ## Register for Hackathon
 
-This endpoint registers a user for a specific hackathon.
+This endpoint registers a user for a specific hackathon, by adding them to part of participants of a hackathon.
 
 ### Request
 
@@ -159,19 +252,6 @@ This endpoint registers a user for a specific hackathon.
 
 **Authentication Required:** Yes
 
-**Parameters:**
-
-None
-
-
-
-This endpoint retrieves a list of all hackathons.
-
-### Request
-
-`GET /api/hackathon/`
-
-**Authentication Required:** Yes
 
 #### Parameters
 
