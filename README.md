@@ -13,6 +13,10 @@ This API allows authorized users to create, list, register for, and submit to ha
     - [Response](#response-1)
       - [Success Response](#success-response)
   - [Register for Hackathon](#register-for-hackathon)
+    - [Request](#request-2)
+    - [Request](#request-3)
+      - [Parameters](#parameters-2)
+    - [Response](#response-2)
 
 The API is built using Django and Django Rest Framework with a MySQL or PostgresQL database.
 
@@ -24,6 +28,8 @@ This endpoint allows authorized users to create a new hackathon.
 
 `POST api/hackathon/`
 
+**Authentication Required:** Yes
+
 ```json
 {
   "title": "Hackathon Title",
@@ -33,7 +39,7 @@ This endpoint allows authorized users to create a new hackathon.
   "submission_type": "image",
   "start_datetime": "2023-06-01T00:00:00Z",
   "end_datetime": "2023-06-30T23:59:59Z",
-  "reward_prize": "$1000"
+  "reward_prize": 1000
 }
 ```
 
@@ -52,10 +58,13 @@ This endpoint allows authorized users to create a new hackathon.
 
 ### Response
 
-```json
+```
 POST api/hackathon/ HTTP/1.1
 Authorization: Token <user_token>
 Content-Type: application/json
+```
+
+```json
 
 {
   "id": 1,
@@ -69,8 +78,6 @@ Content-Type: application/json
   "reward_prize": "$1000"
 }
 ```
-
-Sure! Here's the information for the "List Hackathons" API:
 
 ## List Hackathons
 
@@ -89,10 +96,6 @@ None
 ### Response
 
 #### Success Response
-
-**Code:** 200 OK
-
-**Content:**
 
 ```json
 [
@@ -146,15 +149,13 @@ None
 ]
 ```
 
-Sure, here's the documentation for Register for Hackathon:
-
 ## Register for Hackathon
 
-Registers a user for a specific hackathon.
+This endpoint registers a user for a specific hackathon.
 
-**URL:** `/api/hackathon/<int:hackathon_id>/register/`
+### Request
 
-**Method:** `POST`
+`POST /api/hackathon/<int:hackathon_id>/register/`
 
 **Authentication Required:** Yes
 
@@ -162,13 +163,24 @@ Registers a user for a specific hackathon.
 
 None
 
-**Example Response:**
+
+
+This endpoint retrieves a list of all hackathons.
+
+### Request
+
+`GET /api/hackathon/`
+
+**Authentication Required:** Yes
+
+#### Parameters
+
+None
+
+### Response
 
 ```json
-HTTP/1.1 201 Created
-Content-Type: application/json
-
 {
     "message": "You have successfully registered for ${hackathon.title}",
 }
-```****
+```
