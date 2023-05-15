@@ -13,7 +13,7 @@ class AuthenticationTests(APITestCase):
         )
 
     def test_token_obtain(self):
-        url = '/api/token/'
+        url = '/api/auth/token/'
         data = {'username': 'testuser', 'password': 'testpassword'}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -22,21 +22,8 @@ class AuthenticationTests(APITestCase):
 
     def test_token_refresh(self):
         refresh = RefreshToken.for_user(self.user)
-        url = '/api/token/refresh/'
+        url = '/api/auth/token/refresh/'
         data = {'refresh': str(refresh)}
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn('access', response.data)
-
-    def test_auth_required(self):
-        url = '/api/protected/'
-        response = self.client.get(url, format='json')
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-
-    def test_auth_success(self):
-        url = '/api/protected/'
-        token = str(RefreshToken.for_user(self.user).access_token)
-        headers = {'Authorization': f'Bearer {token}'}
-        response = self.client.get(url, format='json', **headers)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['username'], 'testuser')

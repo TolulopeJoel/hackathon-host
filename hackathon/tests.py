@@ -24,7 +24,7 @@ class HackathonRegistrationViewTestCase(TestCase):
             description='A test hackathon',
             background_image='background',
             hackathon_image='hackathon_image',
-            sumbission_type='Image',
+            submission_type='Image',
             start_datetime='2023-05-15:00:00:00',
             end_datetime='2023-05-16:00:00:00',
             reward_prize=300,
@@ -35,11 +35,10 @@ class HackathonRegistrationViewTestCase(TestCase):
         """
         Test that a user can successfully register for a hackathon.
         """
-        url = reverse('hackathon-registration')
-        data = {'hackathon_id': self.hackathon.id}
+        url = reverse('hackathon-registration', kwargs={'id': self.hackathon.id})
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertTrue(self.user in self.hackathon.participants.all())
@@ -51,11 +50,10 @@ class HackathonRegistrationViewTestCase(TestCase):
         # Add the test user to the hackathon's participants
         self.hackathon.participants.add(self.user)
 
-        url = reverse('hackathon-registration')
-        data = {'hackathon_id': self.hackathon.id}
+        url = reverse('hackathon-registration', kwargs={'id': self.hackathon.id})
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         # Check that the response message indicates the user is already registered
@@ -65,11 +63,10 @@ class HackathonRegistrationViewTestCase(TestCase):
         """
         Test that an error message is returned when trying to register for a hackathon that does not exist.
         """
-        url = reverse('hackathon-registration')
-        data = {'hackathon_id': 999}  # Invalid hackathon ID
+        url = reverse('hackathon-registration', kwargs={'id': 9999})  # Invalid ID
 
         self.client.force_authenticate(user=self.user)
-        response = self.client.post(url, data, format='json')
+        response = self.client.post(url, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data['detail'], 'Hackathon not found')
