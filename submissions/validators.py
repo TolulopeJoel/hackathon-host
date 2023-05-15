@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
 
@@ -12,6 +13,9 @@ def validate_submission(attrs, hackathon):
     if not any(submission_types):
         raise serializers.ValidationError(f'Submission of {submission_type} is required')
     
+    # Check if hackathon has started
+    if hackathon.start_datetime < timezone.now():
+        raise serializers.ValidationError('Hackathon has already started. Submissions cannot be accepted or edited.')
 
     # validate participant submission matches hackathon submission type
     if submission_type == 'image' and not attrs.get('image'):
