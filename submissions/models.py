@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.core.exceptions import ValidationError
 
 from hackathon.models import Hackathon
 
@@ -19,16 +18,3 @@ class Submission(models.Model):
     
     def __str__(self):
         return f'{self.user}\'s submission for {self.hackathon.title}'
-    
-    def clean(self):
-        if self.hackathon.submission_type == 'image' and not self.image:
-            raise ValidationError('Image submission is required.')
-
-        if self.hackathon.submission_type == 'file' and not self.file:
-            raise ValidationError('File submission is required.')
-
-        if self.hackathon.submission_type == 'link' and not self.link:
-            raise ValidationError('Link submission is required.')
-
-        # if self.hackathon.submission_type not in ['image', 'file', 'link']:
-        #     raise ValidationError('Invalid submission type.')
