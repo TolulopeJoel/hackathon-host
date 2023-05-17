@@ -26,7 +26,7 @@ All APIs related to Hackathon
 
 This endpoint allows authorized users to create a new hackathon.
 
-### Request
+### Example Request
 
 `POST api/hackathon/`
 
@@ -58,13 +58,7 @@ This endpoint allows authorized users to create a new hackathon.
 | `end_datetime`     | `string` | **Required**. The end date and time of the hackathon in ISO 8601 format.            |
 | `reward_prize`     | `string` | **Required**. The reward prize for the hackathon.                                   |
 
-### Response
-
-```
-POST api/hackathon/ HTTP/1.1
-Authorization: Token <user_token>
-Content-Type: application/json
-```
+### Example Response
 
 ```json
 
@@ -95,9 +89,7 @@ This endpoint retrieves a list of all hackathons.
 
 None
 
-### Response
-
-#### Success Response
+### Example Response
 
 ```json
 [
@@ -165,9 +157,7 @@ This endpoint retrieves a list of all hackathons current user is a participant i
 
 None
 
-### Response
-
-#### Success Response
+### Example Response
 
 ```json
 [
@@ -267,7 +257,7 @@ All APIs related to Submissions
 
 This endpoint allows authorized users to create submissions for hackathons.
 
-### Request
+### Example Request
 
 `POST api/submissions/`
 
@@ -295,7 +285,7 @@ Image, file and link parameters are required based on hackathon submission type.
 | `link`         | **Not Required**. The URL for submission.         |
 | `hackathon_id` | **Required**. The id of the registered hackathon. |
 
-### Response
+### Example Response
 
 ```json
 {
@@ -333,9 +323,7 @@ This endpoint retrieves a list of all user submission for hackathons.
 
 None
 
-### Response
-
-#### Success Response
+### Example Response
 
 ```json
 [
