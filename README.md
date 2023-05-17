@@ -284,14 +284,14 @@ This endpoint allows authorized users to create submissions for hackathons.
 
 Image, file and link parameters are required based on hackathon submission type.
 
-| Name            | Description                                       |
-| ----------------| ------------------------------------------------- |
-| `name`          | **Required**. The name of the submission.         |
-| `summary`       | **Required**. The summary of the submission.      |
-| `file`          | **Not Required**. The file for submission.        |
-| `image`         | **Not Required**. The image file for submission.  |
-| `link`          | **Not Required**. The URL for submission.         |
-| `hackathon_id`  | **Required**. The id of the registered hackathon. |
+| Name           | Description                                       |
+| -------------- | ------------------------------------------------- |
+| `name`         | **Required**. The name of the submission.         |
+| `summary`      | **Required**. The summary of the submission.      |
+| `file`         | **Not Required**. The file for submission.        |
+| `image`        | **Not Required**. The image file for submission.  |
+| `link`         | **Not Required**. The URL for submission.         |
+| `hackathon_id` | **Required**. The id of the registered hackathon. |
 
 ### Response
 
@@ -314,4 +314,80 @@ Image, file and link parameters are required based on hackathon submission type.
     "created_at": "2023-05-17T15:05:15.102781Z",
     "updated_at": "2023-05-17T15:05:15.102824Z"
 }
+```
+
+
+## List Submissions
+
+This endpoint retrieves a list of all user submission for hackathons.
+
+### Request
+
+`GET /api/submissions/`
+
+**Authentication Required:** Yes
+
+#### Parameters
+
+None
+
+### Response
+
+#### Success Response
+
+```json
+[
+    {
+        "id": 23,
+        "user": {
+            "id": 34,
+            "username": "Thomason",
+            "first_name": "Thomas",
+            "last_name": "Richardson"
+        },
+        "hackathon": "Bliss Hackathon for Good",
+        "name": "Using AI to secure users authorization",
+        "summary": "Hello World",
+        "file": "https://example.com/media/submissions/files/file.pdf",
+        "link": null,
+        "image": null,
+
+        "created_at": "2023-05-17T15:05:15.102781Z",
+        "updated_at": "2023-05-17T15:05:15.102824Z"
+    },
+    {
+        "id": 5,
+        "user": {
+            "id": 34,
+            "username": "Thomason",
+            "first_name": "Thomas",
+            "last_name": "Richardson"
+        },
+        "hackathon": " Hackathon",
+        "name": "To the moon",
+        "summary": "Hello World",
+        "image": "https://example.com/media/submissions/files/submission.jpeg",
+        "link": null,
+        "file": null,
+        "created_at": "2023-05-15T08:19:44.047406Z",
+        "updated_at": "2023-05-15T08:19:44.047436Z"
+    },
+    {
+        "id": 6,
+        "user": {
+            "id": 34,
+            "username": "Thomason",
+            "first_name": "Thomas",
+            "last_name": "Richardson"
+        },
+        "hackathon": "Bliss Hackathon",
+        "name": "To the moon",
+        "summary": "Hello World",
+        "file": "https://example.com/media/submissions/files/sad-face-in-rounded-square_OKHspC4.png",
+        "link": null,
+        "image": null,
+        "created_at": "2023-05-17T15:05:15.102781Z",
+        "updated_at": "2023-05-17T15:05:15.102824Z"
+    }
+]
 ```
