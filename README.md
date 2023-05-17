@@ -2,7 +2,6 @@
 
 This API allows authorized users to create, list, register for, and submit to hackathons. It provides the following endpoints:
 
-- [Hackaton-Host](#hackaton-host)
 - [Hackathon](#hackathon)
   - [Create Hackathon](#create-hackathon)
   - [List Hackathons](#list-hackathons)
@@ -11,6 +10,10 @@ This API allows authorized users to create, list, register for, and submit to ha
 - [Submission](#submission)
   - [Create Submission](#create-submission)
   - [List Submissions](#list-submissions)
+- [Authentication and Authorization](#authentication-and-authorization)
+  - [Register User](#register-user)
+  - [Create Token](#create-token)
+  - [Refresh Token](#refresh-token)
 
 
 The API is built using Django and Django Rest Framework with a **PostgresQL** database
@@ -260,7 +263,6 @@ None
 
 All APIs related to Submissions
 
-
 ## Create Submission
 
 This endpoint allows authorized users to create submissions for hackathons.
@@ -391,3 +393,118 @@ None
     }
 ]
 ```
+
+
+
+
+# Authentication and Authorization
+
+These endpoints are responsible for authentication and authorization.
+
+## Register User
+
+### Example Request
+
+`POST api/auth/register/`
+
+**Authentication Required:** No
+
+```json
+{
+    "email": "testuser@example.com",
+    "first_name": "Test",
+    "last_name": "User",
+    "username": "testuser",
+    "password": "thisisAsecret378",
+    "password2": "thisisAsecret378"
+}
+```
+
+#### Parameters
+
+| Name         | Type     | Description   |
+| ------------ | -------- | ------------- |
+| `email`      | `string` | **Required**  |
+| `first_name` | `string` | **Required**  |
+| `last_name`  | `string` | **Required**  |
+| `username`   | `string` | **Required**  |
+| `password`   | `string` | **Required**  |
+| `password2`  | `string` | **Required**. |
+
+### Example Response
+
+```json
+{
+    "id": 45,
+    "email": "testuser@example.com",
+    "first_name": "Test",
+    "last_name": "User",
+    "username": "testuser"
+}
+```
+
+
+## Create Token
+
+Tokens are used to authenticate users
+
+### Example Request
+
+`POST api/auth/token/`
+
+**Authentication Required:** No
+
+```json
+{
+    "username": "testuser",
+    "password": "thisisAsecret378",
+}
+```
+
+#### Parameters
+
+| Name       | Type     | Description  |
+| ---------- | -------- | ------------ |
+| `username` | `string` | **Required** |
+| `password` | `string` | **Required** |
+
+### Example Response
+
+```json
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4NDQzMDI5OSwiaWF0IjoxNjg0MzQzODk5LCJqdGkiOiJhYzZkOTRkNjU5NTE0ZTNiOWYxNmZlOWZiNTRkYjc5YSIsInVzZXJfaWQiOjR9.eCJxf0tKo8VsQX9ZJQe8E4UF_pR7aOEYVN3CkZZjYQg",
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwMzQzMjk5LCJpYXQiOjE2ODQzNDM4OTksImp0aSI6ImRhY2YxMjU3MDE2MjQ4ZjViMDI4YTY5NzY2OTc4MzVkIiwidXNlcl9pZCI6NH0.RRCP9Ceo5dve4BdIq9OJEd7lD5Yryqu6zErZvURp6qs"
+}
+```
+
+
+## Refresh Token
+
+This endpoint refreshes access tokens when they are expired.
+
+### Example Request
+
+`POST api/auth/token/refresh/`
+
+**Authentication Required:** No
+
+```json
+{
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY4NDQzMDI5OSwiaWF0IjoxNjg0MzQzODk5LCJqdGkiOiJhYzZkOTRkNjU5NTE0ZTNiOWYxNmZlOWZiNTRkYjc5YSIsInVzZXJfaWQiOjR9.eCJxf0tKo8VsQX9ZJQe8E4UF_pR7aOEYVN3CkZZjYQg"
+}
+```
+
+#### Parameters
+
+| Name      | Type     | Description  |
+| --------- | -------- | ------------ |
+| `refresh` | `string` | **Required** |
+
+### Example Response
+
+```json
+{
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkwMzQzNTQwLCJpYXQiOjE2ODQzNDM4OTksImp0aSI6ImRkMzA4OTliZDE0ZDRmZmZiZjVlNDc1YmFlNDg1MWQxIiwidXNlcl9pZCI6NH0.lHDTDBph_qB3JK5a3N_OL9QA4U3b5-XKuxQY8FQZx9M"
+}
+```
+
