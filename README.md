@@ -5,23 +5,12 @@ This API allows authorized users to create, list, register for, and submit to ha
 - [Hackaton-Host](#hackaton-host)
 - [Hackathon](#hackathon)
   - [Create Hackathon](#create-hackathon)
-    - [Request](#request)
-      - [Parameters](#parameters)
-    - [Response](#response)
   - [List Hackathons](#list-hackathons)
-    - [Request](#request-1)
-      - [Parameters](#parameters-1)
-    - [Response](#response-1)
-      - [Success Response](#success-response)
   - [Enrolled Hackathons](#enrolled-hackathons)
-    - [Request](#request-2)
-      - [Parameters](#parameters-2)
-    - [Response](#response-2)
-      - [Success Response](#success-response-1)
   - [Register for Hackathon](#register-for-hackathon)
-    - [Request](#request-3)
-      - [Parameters](#parameters-3)
-    - [Response](#response-3)
+- [Submission](#submission)
+  - [Create Submission](#create-submission)
+  - [List Submissions](#list-submissions)
 
 
 The API is built using Django and Django Rest Framework with a **PostgresQL** database
@@ -262,5 +251,67 @@ None
 ```json
 {
     "message": "You have successfully registered for ${hackathon.title}",
+}
+```
+
+
+
+# Submission
+
+All APIs related to Submissions
+
+
+## Create Submission
+
+This endpoint allows authorized users to create submissions for hackathons.
+
+### Request
+
+`POST api/submissions/`
+
+**Authentication Required:** Yes
+
+```json
+{
+    "hackathon_id": 23,
+    "name": "Using AI to secure users authorization",
+    "summary": "Hello World",
+    "file": "https://example.com/media/submissions/files/file.pdf",
+}
+```
+
+#### Parameters
+
+Image, file and link parameters are required based on hackathon submission type.
+
+| Name            | Description                                       |
+| ----------------| ------------------------------------------------- |
+| `name`          | **Required**. The name of the submission.         |
+| `summary`       | **Required**. The summary of the submission.      |
+| `file`          | **Not Required**. The file for submission.        |
+| `image`         | **Not Required**. The image file for submission.  |
+| `link`          | **Not Required**. The URL for submission.         |
+| `hackathon_id`  | **Required**. The id of the registered hackathon. |
+
+### Response
+
+```json
+{
+    "id": 23,
+    "user": {
+        "id": 34,
+        "username": "Thomason",
+        "first_name": "Thomas",
+        "last_name": "Richardson"
+    },
+    "hackathon": "Bliss Hackathon for Good",
+    "name": "Using AI to secure users authorization",
+    "summary": "Hello World",
+    "file": "https://example.com/media/submissions/files/file.pdf",
+    "link": null,
+    "image": null,
+
+    "created_at": "2023-05-17T15:05:15.102781Z",
+    "updated_at": "2023-05-17T15:05:15.102824Z"
 }
 ```
