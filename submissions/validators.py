@@ -5,7 +5,7 @@ from rest_framework.exceptions import NotFound
 from hackathon.models import Hackathon
 
 
-def validate_submission(attrs, hackathon):
+def validate_submission(attrs, hackathon, user):
     # validate a submission is submitted
     submission_types = [attrs.get('link'), attrs.get('file'), attrs.get('image')]
     submission_type = hackathon.submission_type
@@ -26,11 +26,16 @@ def validate_submission(attrs, hackathon):
 
     if submission_type == 'link' and not attrs.get('link'):
         raise serializers.ValidationError('Link submission is required.')
+    
+    # validate user is a hackathon participant
+    if user not in hackathon.participants.all():
+        raise serializers.ValidationError(f'You have to enroll to {hackathon.title} before you can make a submission.')
 
 
 def validate_hackathon(self, attrs):
     request = self.context.get('request')
     hackathon_id= request.data.get('hackathon_id')
+    user = request.user
 
     try:
         hackathon = Hackathon.objects.get(id=hackathon_id)
@@ -38,6 +43,6 @@ def validate_hackathon(self, attrs):
         raise NotFound('Hackathon not found')
 
     # call validate submission
-    validate_submission(attrs, hackathon)
+    validate_submission(attrs, hackathon, user)
 
     return attrs
