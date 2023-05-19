@@ -32,3 +32,11 @@ class HackathonSerializer(serializers.ModelSerializer):
 
         return attrs
 
+
+class PublicHackathonSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    organizer = PublicUserSerializer(read_only=True)
+    title = serializers.CharField(read_only=True)
+    description = serializers.CharField(read_only=True)
+    start_datetime = serializers.DateTimeField(read_only=True)
+    end_datetime = serializers.DateTimeField(read_only=True)
