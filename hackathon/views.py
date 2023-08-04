@@ -7,27 +7,50 @@ from .serializers import HackathonSerializer
 
 
 class HackathonViewset(viewsets.ModelViewSet):
+    """
+    API endpoint that allows CRUD operations on Hackathon objects.
+    """
+
     queryset = Hackathon.objects.all()
     serializer_class = HackathonSerializer
-    
+
     def perform_create(self, serializer):
+        """
+        Create a new Hackathon object with the current user as the organizer.
+        """
         organizer = self.request.user
         return serializer.save(organizer=organizer)
 
 
 class EnrolledHackthonListView(generics.ListAPIView):
+    """
+    API endpoint that lists Hackathons where the current user is enrolled.
+    """
+
     serializer_class = HackathonSerializer
 
     def get_queryset(self):
+        """
+        Get a list of Hackathons where the current user is enrolled.
+        Returns:
+            QuerySet: A queryset containing Hackathons with the current user as participant.
+        """
         user = self.request.user
         return Hackathon.objects.filter(participants=user)
 
 
 class HackathonRegistrationView(generics.CreateAPIView):
+    """
+    API endpoint for registering users for a specific Hackathon.
+    """
+
     queryset = Hackathon.objects.all()
     serializer_class = HackathonSerializer
 
     def get_object(self):
+        """
+        Get the Hackathon object based on the 'id' URL parameter.
+        """
         hackathon_id = self.kwargs.get('id')
         try:
             return self.queryset.get(id=hackathon_id)
@@ -35,7 +58,10 @@ class HackathonRegistrationView(generics.CreateAPIView):
             raise NotFound('Hackathon not found')
 
     def create(self, request, *args, **kwargs):
-        # Add users as participants Hackathon
+        """
+        Register the current user for a specific Hackathon.
+        Add user as a participant to the Hackathon.
+        """
         hackathon = self.get_object()
         user = request.user
 

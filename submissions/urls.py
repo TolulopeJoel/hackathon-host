@@ -6,6 +6,6 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 # contains all user's submissions list('submissions/') and detail(submissions/<int:pk>/) endpoints
-router.register('', views.SubmissionsViewset, basename='submissions')
+router.register('', views.SubmissionsViewset, basename='submission')
 
 urlpatterns = router.urls

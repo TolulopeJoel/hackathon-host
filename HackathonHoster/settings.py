@@ -44,13 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # third party apps
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
     'whitenoise',
-    
+
     # local apps
     'hackathon.apps.HackathonConfig',
     'submissions.apps.SubmissionsConfig',
@@ -165,6 +165,6 @@ SIMPLE_JWT = {
 
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000',
-     'https://hackathon-host.netlify.app',
+    'http://localhost:3000',
+    'https://hackathon-host.netlify.app',
 ]
